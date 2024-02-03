@@ -1,0 +1,30 @@
+# Maintainer: asdfer
+
+pkgname=low-battery-notification-git
+_pkgname=low-battery-notification
+pkgver=39d8c6d
+pkgrel=1
+pkgdesc="Low battery notifier using libnotify written in rust"
+url="https://github.com/asdfer-1234/low-battery-notification"
+source=("git+https://github.com/asdfer-1234/low-battery-notification")
+arch=('x86_64')
+license=('GPL3')
+depends=('libnotify')
+makedepends=('cargo')
+provides=('low-battery-notification')
+sha256sums=(SKIP)
+
+build() {
+	cd "$srcdir/$_pkgname"
+	make
+}
+
+package() {
+	cd "$srcdir/$_pkgname"
+	install -Dm755 target/release/low-battery-notification "${pkgdir}/usr/bin/low-battery-notification"
+}
+
+pkgver() {
+	cd "$srcdir/$_pkgname"
+	git describe --always
+}
